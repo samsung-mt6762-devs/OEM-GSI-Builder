@@ -33,27 +33,27 @@ jobs:
         run: |
           git clone --recurse-submodules "${{ steps.config.outputs.tool_repo }}"
           bash OriginGSItool/setup.sh
-          sed -i '$d' RakijaGSIs/url2GSI.sh
+          sed -i '$d' OriginGSItool/url2GSI.sh
           chmod -R 777 OriginGSItool
           chmod 777 OriginGSItool/make.sh
       - name: Build A/B
         if: ${{ steps.config.outputs.output_type == 'all' }}
         run: |
-          sudo ./RakijaGSIs/url2GSI.sh "${{ steps.config.outputs.url }}" "${{ steps.config.outputs.firmware_type }}" "${{ steps.config.outputs.extra_args }}"
+          sudo ./OriginGSItool/url2GSI.sh "${{ steps.config.outputs.url }}" "${{ steps.config.outputs.firmware_type }}" "${{ steps.config.outputs.extra_args }}"
       - name: Build AB
         if: ${{ steps.config.outputs.output_type == 'ab' }}
         run: |
-          sudo ./RakijaGSIs/url2GSI.sh "${{ steps.config.outputs.url }}" "${{ steps.config.outputs.firmware_type }}" --ab ${{ steps.config.outputs.extra_args }}
+          sudo ./OriginGSItool/url2GSI.sh "${{ steps.config.outputs.url }}" "${{ steps.config.outputs.firmware_type }}" --ab ${{ steps.config.outputs.extra_args }}
       - name: Build AOnly
         if: ${{ steps.config.outputs.output_type == 'a' }}
         run: |
-          sudo ./RakijaGSIs/url2GSI.sh "${{ steps.config.outputs.url }}" "${{ steps.config.outputs.firmware_type }}" --aonly ${{ steps.config.outputs.extra_args }}
+          sudo ./OriginGSItool/url2GSI.sh "${{ steps.config.outputs.url }}" "${{ steps.config.outputs.firmware_type }}" --aonly ${{ steps.config.outputs.extra_args }}
       - name: Pre-Upload
         run: |
           mkdir build/
-          sudo mv RakijaGSIs/output/*.img build/
+          sudo mv OriginGSItool/output/*.img build/
           gzip -r build/
-          sudo mv RakijaGSIs/output/*.txt build/
+          sudo mv OriginGSItool/output/*.txt build/
       - name: Setup SSH
         uses: fastai/workflows/ssh@master
         with:
