@@ -35,7 +35,7 @@ jobs:
           bash RakijaGSIs/setup.sh
           sed -i '$d' RakijaGSIs/url2GSI.sh
           chmod -R 777 OriginGSItool
-          chmod 777 RakijaGSIs/make.sh
+          chmod 777 OriginGSItool/make.sh
       - name: Build A/B
         if: ${{ steps.config.outputs.output_type == 'all' }}
         run: |
